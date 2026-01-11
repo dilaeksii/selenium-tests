@@ -44,8 +44,40 @@ public class FirstTest {
                 driver.getCurrentUrl().contains("k=laptop"),
                 "URL laptop aramasını içermiyor!"
         );
+
+        //System.out.println(driver.getCurrentUrl()); -> o anki urlyi konsola yazdırır.
+        //System.out.println(driver.getTitle()); -> o anki sayfada bulunan başlığı getirir
+        //System.out.println(driver.getWindowHandles()); -> tarayıcıda bulunduğumuz andaki unique değeri verir her çalıştığında farklı değer gelir
+        //driver.getPageSource(); -> sayfanın html kodunu getirir
+        //System.out.println(driver.getClass()); -> class org.openqa.selenium.chrome.ChromeDriver
     }
 
+
+    @Test
+    void titleTest() {
+        wait.until(ExpectedConditions.titleContains("Amazon"));
+
+        String title = driver.getTitle();
+        String word = driver.getPageSource();
+        assertTrue(
+                title.contains("Amazon"),
+                "Title Amazon içermiyor"
+        );
+
+        assertTrue(
+                word.contains("shopping"),
+                "HTML kodu shopping kelimesini içermiyor"
+        );
+    }
+
+
+    @Test
+    void urlTest() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-logo-sprites")));
+
+        String URL = driver.getCurrentUrl();
+        assertTrue(URL.contains("amazon.com"), "URL, Amazon.com içermiyor");
+    }
 
     @AfterEach
     void close() {
